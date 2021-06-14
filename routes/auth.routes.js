@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 const router = Router();
+const config = require('config');
 
 // api/auth/register
 router.post(
@@ -79,7 +80,7 @@ router.post(
 
     const token = jwt.sign(
       { userId: user.id },
-      'mern app',
+      config.get('jwtSecret'),
       { expiresIn: '1h' }
     )
 

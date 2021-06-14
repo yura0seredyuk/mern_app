@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const config = require('config');
 
 const app = express();
 
@@ -18,8 +19,8 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-const PORT = process.env.PORT || 80;
-const mongoURI = 'mongodb+srv://yurii:1234qwe@cluster0.uazh8.mongodb.net/app?retryWrites=true&w=majority';
+const PORT = config.get('port') || 5000;
+const mongoURI = config.get('mongoURI');
 
 async function start() {
   try {

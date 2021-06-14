@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const config = require('config');
 
 module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') {
@@ -12,7 +13,7 @@ module.exports = (req, res, next) => {
       return res.status(401).json({ message: 'not authorizated' });
     }
 
-    const decoded = jwt.verify(token, 'mern app');
+    const decoded = jwt.verify(token, config.get('jwtSecret'));
     req.user = decoded;
     next();
 

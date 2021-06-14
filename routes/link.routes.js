@@ -3,9 +3,11 @@ const shortid = require('shortid');
 const Link = require('../models/Link');
 const auth = require('../middleware/auth.middleware');
 const router = Router();
+const config = require('config')
 
 router.post('/generate', auth, async (req, res) => {
   try {
+    const baseUrl = config.get('baseUrl');
     const {from} = req.body;
 
     const code = shortid.generate();
@@ -16,7 +18,7 @@ router.post('/generate', auth, async (req, res) => {
       return res.json({ link: existing });
     }
 
-    const to = '/t/' + code;
+    const to = baseUrl + '/t/' + code;
 
     const link = new Link({
       code, to, from, owner: req.user.userId
